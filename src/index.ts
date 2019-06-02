@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js';
 import { MainView } from './views/MainView';
 import { CardsView } from './views/CardsView';
+import { TextView } from './views/TextView';
+import { ParticlesView } from './views/ParticlesView';
 
 let app : PIXI.Application;
 function start () : void {
-    app = initApp();    onResize();    new CardsView(app);
+    app = initApp();    onResize();    new TextView(app);
 }
 
 function onResize () : void {

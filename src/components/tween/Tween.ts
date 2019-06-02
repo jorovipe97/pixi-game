@@ -2,11 +2,10 @@ import * as PIXI from 'pixi.js';
 
 export class Tween {
     private moveToOptions : MoveToOptions;
-    private dist : number;
     private duration : number;
     private displayObject : PIXI.DisplayObject;
     /**
-     * Time in milliseconds
+     * Time in seconds
      */
     private timeCounter : number;
     private isEasing : boolean;
