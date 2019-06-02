@@ -5,14 +5,14 @@ export class Button extends PIXI.Sprite {
     downTint : number = 0x95a5a6;
     normalTint : number = 0xFFFFFF;
     text : PIXI.Text;
-    constructor (texture : PIXI.Texture, text : string) {
+    constructor (texture : PIXI.Texture, text : string, style?: any) {
         super(texture);
         // Enable events
         this.interactive = true;
         // Setting this changes the 'cursor' property to 'pointer'.
         this.buttonMode = true;
 
-        this.text = new PIXI.Text(text);
+        this.text = new PIXI.Text(text, style);
         this.addChild(this.text);
 
         this.text.x = (this.width - this.text.width) * 0.5;
@@ -41,9 +41,8 @@ export class Button extends PIXI.Sprite {
         this.tint = this.normalTint;
     }
 
-    static createButtonTexture (options : ButtonTextureArgs) : PIXI.Texture {
-        // Render a circle to a texture
-
+    static createButtonTexture (options : ButtonTextureOptions) : PIXI.Texture {
+        // Render a gaphic to a texture
         const graphics = new PIXI.Graphics();
         graphics.beginFill(0xFFFFFF);
         graphics.lineStyle(1.5, 0x000000);
@@ -55,7 +54,7 @@ export class Button extends PIXI.Sprite {
     }
 }
 
-interface ButtonTextureArgs {
+interface ButtonTextureOptions {
     width : number;
     height : number;
     radius : number;

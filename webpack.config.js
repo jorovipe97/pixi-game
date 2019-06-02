@@ -1,7 +1,9 @@
 const path = require('path');
 
 module.exports = {
-	entry: './src/index.ts',
+	entry: [
+		'./src/index.ts'
+	],
 	mode: 'development',
 	output: {
 		filename: 'bundle.js',
@@ -9,11 +11,14 @@ module.exports = {
 	},
 	devtool: 'inline-source-map', // not recommended for production code.
 	devServer: {
-		contentBase: './dist'
+		contentBase: './dist',
+		host: "192.168.1.3" , // Your Computer Name
+		disableHostCheck: false
+    	// port: 8080
 	},
 	plugins: [],
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js']
+		extensions: ['.tsx', '.ts', '.js', '.jsx']
 	},
 	module: {
 		rules: [
