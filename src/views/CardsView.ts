@@ -3,11 +3,8 @@ import View from './View';
 import { Button } from '../components/button/Button';
 import { MainView } from './MainView';
 
-// import { TweenMax, Power2 } from "gsap";
-
 // My minimalistic tween library.
 import { Tween } from '../components/tween/Tween';
-// import { TweenManager } from '../components/tween/TweenManager';
 
 export class CardsView extends View {
     backButton : Button;
@@ -16,6 +13,8 @@ export class CardsView extends View {
     fpsText : PIXI.Text;
     time : number;
     tween1 : Tween;
+    tweens : Tween[];
+
     startView () {
         this.cards = [];
         const cardsCount = 144;
@@ -51,32 +50,37 @@ export class CardsView extends View {
             this.cards.push(sprite);
         }
 
-        this.cards[0].x += 100;
+        // this.cards[0].x += 100;
         const indexLastCard = cardsCount - 1;
         this.tween1 = new Tween(this.cards[0], {
             to: {
-                x: this.cards[0].x,
-                y: this.screenHeight - this.cards[0].height
+                x: 0,
+                y: this.cards[0].y
             },
+            delay: 2,
             duration: 2
         });
-        // for (let i = indexLastCard; i >= 0; i--) {
-        //     const card = this.cards[i];
-        //     let delay = cardsCount - i + 1;
-        //     let inverseI = indexLastCard - i;
-        //     let targetX = this.screenWidth * 0.5 + 30;
-        //     let targetY = initY + inverseI * this.yOffset;
-        //     const time = 2;
-        //     TweenMax.to(card, time, {
-        //         x: targetX,
-        //         y: targetY,
-        //         delay: delay,
-        //         ease: Power2.easeOut,
-        //         onStart: () => {
-        //             this.addChild(card); // Ensures this card is on top of the previous cards
-        //         }
-        //     });
-        // }
+        this.tweens = [];
+        for (let i = indexLastCard; i >= 0; i--) {
+            const card = this.cards[i];
+            const delay = cardsCount - i + 1;
+            const inverseI = indexLastCard - i;
+            const targetX = this.screenWidth * 0.5 + 30;
+            const targetY = initY + inverseI * this.yOffset;
+
+            let tween = new Tween(card, {
+                to: {
+                    x: targetX,
+                    y: targetY
+                },
+                delay: delay,
+                duration: 2,
+                onStart: () => { // updates z-index in the new stack
+                    this.addChild(card);
+                }
+            });
+            this.tweens.push(tween);
+        }
 
         this.fpsText = new PIXI.Text('FPS: ');
         this.addChild(this.fpsText);
@@ -85,13 +89,14 @@ export class CardsView extends View {
     updateView (time : number) {
         const FPS = this.app.ticker.FPS.toFixed(3);
         this.fpsText.text = `FPS: ${FPS}`;
+
         // let deltaTime = this.app.ticker.elapsedMS * this.app.ticker.speed;
         let elapsed = this.app.ticker.elapsedMS;//this.app.ticker.deltaTime / PIXI.settings.TARGET_FPMS;
-        // console.log(deltaTime/100);
-        // console.log(deltaTime);
-        // one frame is taking 5ms to complete not the 16ms
-        // console.log(this.currentTime/1000);
-        this.tween1.debugTween(this);
+        // this.tween1.update(elapsed);
+        for (let i = 0; i < this.tweens.length; i++) {
+            let tween = this.tweens[i];
+            tween.update(elapsed);
+        }
     }
 
     onResize () {
