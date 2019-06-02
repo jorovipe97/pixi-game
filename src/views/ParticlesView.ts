@@ -91,6 +91,7 @@ export class ParticlesView extends View {
     }
 
     updateView() {
+        // @ts-ignore
         this.filter.uniforms.uTime = this.timeCounter;
         this.timeCounter += this.app.ticker.elapsedMS / 1000;
         // console.log(this.filter.uniforms);
