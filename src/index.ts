@@ -6,7 +6,7 @@ import { ParticlesView } from './views/ParticlesView';
 
 let app : PIXI.Application;
 function start () : void {
-    app = initApp();    onResize();    new ParticlesView(app);
+    app = initApp();    onResize();    new MainView(app);
 }
 
 function onResize () : void {
