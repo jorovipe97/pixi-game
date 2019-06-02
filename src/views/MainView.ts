@@ -3,6 +3,7 @@ import View from './View';
 import { Button } from '../components/button/Button';
 import { TextView } from './TextView';
 import { CardsView } from './CardsView';
+import { ParticlesView } from './ParticlesView';
 
 export class MainView extends View {
 
@@ -30,17 +31,17 @@ export class MainView extends View {
 
         // create button1 for open test 1
         this.button1 = new Button(buttonTexture, 'Test 1');
-        this.button1.on('pointerdown', this.mousedownTest1, this);
+        this.button1.on('pointerup', this.mousedownTest1, this);
         this.addChild(this.button1);
 
         // create button2 for open test 2
         this.button2 = new Button(buttonTexture, 'Test 2');
-        this.button2.on('pointerdown', this.mousedownTest2, this);
+        this.button2.on('pointerup', this.mousedownTest2, this);
         this.addChild(this.button2);
 
         // create button2 for open test 3
         this.button3 = new Button(buttonTexture, 'Test 3');
-        this.button3.on('pointerdown', this.mousedownTest3, this);
+        this.button3.on('pointerup', this.mousedownTest3, this);
         this.addChild(this.button3);
     }
 
@@ -80,5 +81,7 @@ export class MainView extends View {
 
     private mousedownTest3 () : void {
         console.log('clicked 3!');
+        new ParticlesView(this.app);
+        this.destroy();
     }
 }

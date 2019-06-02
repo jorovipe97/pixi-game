@@ -80,7 +80,6 @@ export class RichText extends PIXI.Container {
             }
         
             if (isImageName) {
-                console.log(isImageName)
                 // create a token whose value are the chars inside the word buffer
                 if (wordsBuffer.length) {
                     this.vToken.push(new RichTextToken(TOKEN_TYPES.WORD, wordsBuffer.join('')));
@@ -104,7 +103,6 @@ export class RichText extends PIXI.Container {
             } else {
                 if (char === ']') continue; // ignore "[" and "]" characters
 
-                console.log(isImageName)
                 // add character to the word buffer
                 wordsBuffer.push(char);
             }

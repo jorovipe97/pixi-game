@@ -36,8 +36,8 @@ export class TextView extends View {
     startView () {
         // Creates a common texture.
         const buttonTexture : PIXI.Texture = Button.createButtonTexture({
-            width: 80,
-            height: 50,
+            width: this.screenWidth * 0.25,
+            height: this.screenHeight * 0.10,
             radius: 5,
             app: this.app
         });
@@ -80,7 +80,6 @@ export class TextView extends View {
             this.onResize(); // recalculate positions
         }
 
-        console.log(this.timeCounter)
         this.timeCounter += this.app.ticker.elapsedMS / 1000;
     }
 
@@ -117,6 +116,6 @@ export class TextView extends View {
 
     private mousedownBackButton () : void {
         new MainView(this.app);
-        super.destroy();
+        this.destroy();
     }
 }

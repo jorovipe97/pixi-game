@@ -27,7 +27,7 @@ export class CardsView extends View {
             app: this.app
         });
         this.backButton = new Button(buttonTexture, 'Back');
-        this.backButton.on('pointerdown', this.pointerdownBackButton, this);
+        this.backButton.on('pointerup', this.pointerdownBackButton, this);
         this.addChild(this.backButton);
 
         const width = 40;

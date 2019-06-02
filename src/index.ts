@@ -6,7 +6,7 @@ import { ParticlesView } from './views/ParticlesView';
 
 let app : PIXI.Application;
 function start () : void {
-    app = initApp();    onResize();    new TextView(app);
+    app = initApp();    onResize();    new ParticlesView(app);
 }
 
 function onResize () : void {
@@ -17,10 +17,10 @@ function onResize () : void {
 /**
  * Creates the html5 canvas element and append it to the body.
  */
-export function initApp(): PIXI.Application {
+function initApp(): PIXI.Application {
     const app = new PIXI.Application({
         autoResize: true,
-        backgroundColor: 0x48dbfb,
+        backgroundColor: 0x353b48,
         resolution: devicePixelRatio
     });
 
@@ -32,8 +32,33 @@ export function initApp(): PIXI.Application {
     return app;
 }
 
+/**
+ *  Loads the resources we need in the Game
+ *  and calls the provided callback when done.
+ *
+ *  @param {Array}      resources       The resources to load
+ *  @param {Function}   cb              The function to call when the loading is completed
+ *
+ *  @returns {Void}
+ */
+function preloadResources (resources : string [], cb : any) {
+
+    // Add the resources and trigger Callback when loaded
+    PIXI.loader
+        .add(resources)
+        // .on("progress", loader => console.log(`${loader.progress}% completed`))
+        .load(cb);
+};
+
 // Wait until the page is fully loaded
-window.addEventListener("load", start);
+window.addEventListener("load", () => {
+    // List of resources to load
+    const resources = ["images/flame.png"];
+
+    preloadResources(resources, () => {
+        start();
+    });
+});
 
 // Listen for window resize events
 window.addEventListener('resize', onResize);

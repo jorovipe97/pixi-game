@@ -55,11 +55,9 @@ export class Tween {
         const dx = this.moveToOptions.to.x - this.beginX;
         const dy = this.moveToOptions.to.y - this.beginY;
 
-        // console.log(timeCounter);
         this.displayObject.x = this.easeOutQuad(this.timeCounter, this.beginX, dx, this.duration);
         this.displayObject.y = this.easeOutQuad(this.timeCounter, this.beginY, dy, this.duration);
         this.timeCounter += elapsed / 1000;
-        // console.log(this.beginY);
 
         // To avoid roots im not using pythaforas' theorem.
         let distX = this.moveToOptions.to.x - this.displayObject.x;
@@ -79,9 +77,7 @@ export class Tween {
      * @param d duration
      */
     linearTween (t : number, b : number, c : number, d : number) : number {
-        const num = c * (t / d) + b;
-        console.log(num);
-        return num;
+        return c * (t / d) + b;
     }
 
     /**
